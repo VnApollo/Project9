@@ -33,11 +33,10 @@ bool CaroModel::placeMove(int row, int col) {
 
     if (checkWin(row, col)) {
         gameOver = true;
-    }
-    else {
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        return true;
     }
 
+    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
     return true;
 }
 
@@ -49,10 +48,13 @@ bool CaroModel::checkWin(int row, int col) {
     for (int j = 0; j < boardSize; ++j) {
         if (board[row][j] == player) {
             count++;
+            if (count >= 3) {
+                return true;
+            }
         }
-    }
-    if (count == boardSize) {
-        return true;
+        else {
+            count = 0;
+        }
     }
 
     // Kiểm tra hàng dọc
@@ -60,35 +62,44 @@ bool CaroModel::checkWin(int row, int col) {
     for (int i = 0; i < boardSize; ++i) {
         if (board[i][col] == player) {
             count++;
+            if (count == 5) {
+                return true;
+            }
         }
-    }
-    if (count == boardSize) {
-        return true;
+        else {
+            count = 0;
+        }
     }
 
     // Kiểm tra đường chéo chính
-    if (row == col) {
+    if (row == col) { // Nếu ô nằm trên đường chéo chính
         count = 0;
         for (int i = 0; i < boardSize; ++i) {
             if (board[i][i] == player) {
                 count++;
+                if (count == 5) {
+                    return true;
+                }
             }
-        }
-        if (count == boardSize) {
-            return true;
+            else {
+                count = 0;
+            }
         }
     }
 
     // Kiểm tra đường chéo phụ
-    if (row + col == boardSize - 1) {
+    if (row + col == boardSize - 1) { // Nếu ô nằm trên đường chéo phụ
         count = 0;
         for (int i = 0; i < boardSize; ++i) {
             if (board[i][boardSize - 1 - i] == player) {
                 count++;
+                if (count == 5) {
+                    return true;
+                }
             }
-        }
-        if (count == boardSize) {
-            return true;
+            else {
+                count = 0;
+            }
         }
     }
 
@@ -100,7 +111,7 @@ bool CaroModel::isGameOver() {
 }
 
 char CaroModel::getCurrentPlayer() {
-    return currentPlayer;
+    return  currentPlayer;
 }
 
 char(*CaroModel::getBoard())[boardSize]

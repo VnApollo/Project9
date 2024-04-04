@@ -6,7 +6,7 @@ void CaroController::playGame()
         view.displayBoard(model.getBoard());
         char currentPlayer = model.getCurrentPlayer();
         int row, col;
-        view.displayMessage("Player " + string(1, currentPlayer) + "'s turn. Enter row and column (0-4): ");
+        view.displayMessage("Player "+ string(1, currentPlayer) + "'s turn. Enter row and column (0-9): ");
         cin >> row >> col;
         if (!model.placeMove(row, col)) {
             view.displayMessage("Invalid move. Try again.");

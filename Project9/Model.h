@@ -22,4 +22,4 @@ public:
 
 };
 
-#endif // MODEL_H
+#endif // !MODEL_H
